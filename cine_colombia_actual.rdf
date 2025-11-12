@@ -1,0 +1,142 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:cine="http://example.org/cine#">
+  <rdf:Description rdf:about="http://example.org/pelicula/1">
+    <cine:formato>Estreno</cine:formato>
+    <cine:preventa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</cine:preventa>
+    <cine:estado>En cartelera</cine:estado>
+    <cine:estreno rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >2025-11-13</cine:estreno>
+    <cine:clasificacion>Mayores de 12 años</cine:clasificacion>
+    <cine:duracion rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+    >112</cine:duracion>
+    <cine:genero>Thriller</cine:genero>
+    <cine:tituloEspanol>Los Ilusionistas 3</cine:tituloEspanol>
+    <cine:titulo>Now You See Me: Now You Don't</cine:titulo>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/pelicula/2">
+    <cine:formato>Preventa</cine:formato>
+    <cine:preventa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</cine:preventa>
+    <cine:estado>En cartelera</cine:estado>
+    <cine:estreno rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >2025-11-20</cine:estreno>
+    <cine:clasificacion>Mayores de 12 años</cine:clasificacion>
+    <cine:duracion rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+    >138</cine:duracion>
+    <cine:genero>Musical</cine:genero>
+    <cine:tituloEspanol>Wicked: Por Siempre</cine:tituloEspanol>
+    <cine:titulo>Wicked: for Good</cine:titulo>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/pelicula/3">
+    <cine:formato>Estreno</cine:formato>
+    <cine:preventa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</cine:preventa>
+    <cine:estado>En cartelera</cine:estado>
+    <cine:estreno rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >2025-11-29</cine:estreno>
+    <cine:clasificacion>Por confirmar</cine:clasificacion>
+    <cine:duracion rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+    >225</cine:duracion>
+    <cine:genero>Concierto</cine:genero>
+    <cine:tituloEspanol>Seventeen World Tour [NEW_] In Japan: Live Viewing</cine:tituloEspanol>
+    <cine:titulo>Seventeen World Tour [NEW_] In Japan: Live Viewing</cine:titulo>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/pelicula/10">
+    <cine:formato>Estreno</cine:formato>
+    <cine:preventa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</cine:preventa>
+    <cine:estado>En cartelera</cine:estado>
+    <cine:estreno rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >2025-10-09</cine:estreno>
+    <cine:clasificacion>Mayores de 7 años</cine:clasificacion>
+    <cine:duracion rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+    >119</cine:duracion>
+    <cine:genero>Acción</cine:genero>
+    <cine:tituloEspanol>Tron: Ares</cine:tituloEspanol>
+    <cine:titulo>Tron: Ares</cine:titulo>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/pelicula/4">
+    <cine:formato>Estreno</cine:formato>
+    <cine:preventa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</cine:preventa>
+    <cine:estado>En cartelera</cine:estado>
+    <cine:estreno rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >2025-11-06</cine:estreno>
+    <cine:clasificacion>Mayores de 12 años</cine:clasificacion>
+    <cine:genero>Acción</cine:genero>
+    <cine:tituloEspanol>Depredador: Tierras Salvajes</cine:tituloEspanol>
+    <cine:titulo>Predator: Badlands</cine:titulo>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/pelicula/5">
+    <cine:formato>Estreno</cine:formato>
+    <cine:preventa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</cine:preventa>
+    <cine:estado>En cartelera</cine:estado>
+    <cine:estreno rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >2025-11-06</cine:estreno>
+    <cine:clasificacion>Mayores de 7 años</cine:clasificacion>
+    <cine:duracion rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+    >121</cine:duracion>
+    <cine:genero>Documental</cine:genero>
+    <cine:tituloEspanol>Twice One in a Million</cine:tituloEspanol>
+    <cine:titulo>Twice One in a Million</cine:titulo>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/pelicula/6">
+    <cine:formato>Estreno</cine:formato>
+    <cine:preventa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</cine:preventa>
+    <cine:estado>En cartelera</cine:estado>
+    <cine:estreno rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >2025-11-06</cine:estreno>
+    <cine:clasificacion>Para todo el Público</cine:clasificacion>
+    <cine:duracion rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+    >98</cine:duracion>
+    <cine:genero>Animación</cine:genero>
+    <cine:tituloEspanol>El Gran Premio: A Toda Velocidad</cine:tituloEspanol>
+    <cine:titulo>Grand Prix of Europe</cine:titulo>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/pelicula/7">
+    <cine:formato>Estreno</cine:formato>
+    <cine:preventa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</cine:preventa>
+    <cine:estado>En cartelera</cine:estado>
+    <cine:estreno rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >2025-11-06</cine:estreno>
+    <cine:clasificacion>Mayores de 12 años</cine:clasificacion>
+    <cine:duracion rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+    >126</cine:duracion>
+    <cine:genero>Comedia</cine:genero>
+    <cine:tituloEspanol>Un Buen Ladrón</cine:tituloEspanol>
+    <cine:titulo>Roofman</cine:titulo>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/pelicula/8">
+    <cine:formato>Preventa</cine:formato>
+    <cine:preventa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</cine:preventa>
+    <cine:estado>En cartelera</cine:estado>
+    <cine:estreno rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >2025-11-06</cine:estreno>
+    <cine:clasificacion>Exclusiva para Mayores de 15 años</cine:clasificacion>
+    <cine:duracion rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+    >109</cine:duracion>
+    <cine:genero>Terror</cine:genero>
+    <cine:tituloEspanol>Dollhouse: Muñeca Maldita</cine:tituloEspanol>
+    <cine:titulo>Dollhouse</cine:titulo>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/pelicula/9">
+    <cine:formato>Preventa</cine:formato>
+    <cine:preventa rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</cine:preventa>
+    <cine:estado>En cartelera</cine:estado>
+    <cine:estreno rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >2025-12-10</cine:estreno>
+    <cine:clasificacion>Mayores de 12 años</cine:clasificacion>
+    <cine:duracion rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+    >98</cine:duracion>
+    <cine:genero>Musical</cine:genero>
+    <cine:tituloEspanol>Rebbeca: Becky G</cine:tituloEspanol>
+    <cine:titulo>Rebbeca: Becky G</cine:titulo>
+  </rdf:Description>
+</rdf:RDF>
