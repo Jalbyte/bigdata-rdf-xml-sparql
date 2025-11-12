@@ -1,0 +1,76 @@
+# Archivos compilados de Java
+*.class
+
+# Archivos de log
+*.log
+
+# Archivos de paquetes
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Archivos generados por Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Archivos de IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Archivos de Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# Archivos de VS Code
+.vscode/
+*.code-workspace
+
+# Archivos de NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Archivos del sistema operativo
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
+*~.nib
+*.orig
+
+# Archivos RDF generados (opcional - descomenta si NO quieres versionar el RDF)
+# cine_colombia_actual.rdf
+
+# Archivos de configuración local
+local.properties
+
+.lib/
+.target/
