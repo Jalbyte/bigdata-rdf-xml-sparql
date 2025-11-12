@@ -27,11 +27,6 @@ import java.util.Map;
  * CineColombiaManager — Ejemplo de aplicación que construye un modelo RDF
  * sobre una colección de películas, lo persiste en disco y ejecuta un conjunto
  * de consultas SPARQL de ejemplo sobre ese grafo.
- *
- * Objetivos de este archivo:
- * - Servir como ejemplo didáctico de uso de Apache Jena (Model, Resources, Literals).
- * - Mostrar cómo persistir/leer un fichero RDF (RDF/XML abreviado).
- * - Ejecutar consultas SPARQL y presentar resultados en tablas ASCII legibles.
  */
 public class CineColombiaManager {
 
@@ -348,56 +343,78 @@ public class CineColombiaManager {
             System.out.println();
         }
     }
-    
+
+    /**
+     * Ejecuta una consulta SPARQL sobre el modelo y presenta los resultados
+     * en formato de tabla ASCII compacta en la consola.
+     *
+     * Estrategia de presentación:
+     * - Trunca valores largos (>MAX_COL_WIDTH) con "..." para mantener filas
+     *   en una sola línea y mejorar la legibilidad.
+     * - Centra las cabeceras de columna y alinea valores numéricos a la derecha.
+     * - Construye separadores horizontales automáticos según el ancho de columnas.
+     *
+     * @param model Modelo RDF sobre el que ejecutar la consulta.
+     * @param queryStr Texto de la consulta SPARQL (SELECT).
+     */
     private static void executeSPARQLQuery(Model model, String queryStr) {
         try {
+            // Compilar la consulta SPARQL y ejecutarla sobre el modelo
             Query query = QueryFactory.create(queryStr);
             try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
                 ResultSet results = qexec.execSelect();
+                // Convertir ResultSet a lista para poder iterar varias veces
                 List<QuerySolution> rows = ResultSetFormatter.toList(results);
                 List<String> vars = query.getResultVars();
 
+                // Caso especial: si no hay resultados, informar y retornar temprano
                 if (rows.isEmpty()) {
                     System.out.println("(sin resultados)");
                     return;
                 }
 
                 int cols = vars.size();
-                final int MAX_COL_WIDTH = 40; // max width for any displayed column
+                final int MAX_COL_WIDTH = 40; // ancho máximo para cualquier columna visualizada
                 int[] widths = new int[cols];
+                // Inicializar anchos con el tamaño del nombre de variable (header)
                 for (int i = 0; i < cols; i++) {
                     widths[i] = Math.min(vars.get(i).length(), MAX_COL_WIDTH);
                 }
 
-                // create a compact display table by truncating long values
+                // Construir tabla de visualización truncando valores largos
                 List<List<String>> displayTable = new ArrayList<>();
                 for (QuerySolution qs : rows) {
                     List<String> displayRow = new ArrayList<>();
                     for (int i = 0; i < cols; i++) {
                         String v = vars.get(i);
                         String val = "";
+                        // Extraer valor del nodo RDF (literal o recurso)
                         if (qs.contains(v)) {
                             RDFNode node = qs.get(v);
                             if (node.isLiteral()) val = node.asLiteral().getString();
                             else val = node.toString();
                         }
+                        // Truncar si excede ancho máximo
                         String display = val;
-                        if (display.length() > MAX_COL_WIDTH) display = display.substring(0, MAX_COL_WIDTH - 3) + "...";
+                        if (display.length() > MAX_COL_WIDTH) {
+                            display = display.substring(0, MAX_COL_WIDTH - 3) + "...";
+                        }
                         displayRow.add(display);
+                        // Actualizar ancho de columna si el valor es más ancho que el header
                         widths[i] = Math.max(widths[i], display.length());
                     }
                     displayTable.add(displayRow);
                 }
 
-                // build separators
+                // Construir separador horizontal (líneas de guiones entre celdas)
                 StringBuilder sep = new StringBuilder();
                 sep.append("+");
                 for (int w : widths) {
-                    sep.append(repeat('-', w + 2));
+                    sep.append(repeat('-', w + 2)); // +2 para espacios de padding
                     sep.append("+");
                 }
 
-                // header (use nicer labels and center)
+                // Construir fila de cabecera (nombres legibles de variables centrados)
                 StringBuilder header = new StringBuilder();
                 header.append("|");
                 for (int i = 0; i < cols; i++) {
@@ -405,23 +422,25 @@ public class CineColombiaManager {
                     header.append(' ').append(center(label, widths[i])).append(' ').append('|');
                 }
 
+                // Imprimir tabla: separador, cabecera, separador, filas, separador final
                 System.out.println(sep.toString());
                 System.out.println(header.toString());
                 System.out.println(sep.toString());
 
-                // print each row as single line
+                // Imprimir cada fila de datos (una línea por fila)
                 for (List<String> row : displayTable) {
                     StringBuilder rb = new StringBuilder();
                     rb.append('|');
                     for (int i = 0; i < cols; i++) {
                         String cell = row.get(i);
+                        // Alinear números a la derecha, texto a la izquierda
                         boolean rightAlign = isNumeric(cell);
                         rb.append(' ').append(formatCell(cell, widths[i], rightAlign)).append(' ').append('|');
                     }
                     System.out.println(rb.toString());
                 }
 
-                // final table separator
+                // Separador final de tabla
                 System.out.println(sep.toString());
             }
         } catch (Exception e) {
@@ -429,20 +448,46 @@ public class CineColombiaManager {
         }
     }
 
+    /**
+     * Rellena una cadena con espacios hasta alcanzar el ancho especificado.
+     * Si la cadena ya es igual o más larga que el ancho, se devuelve tal cual.
+     *
+     * @param s Cadena a rellenar.
+     * @param width Ancho objetivo.
+     * @return Cadena rellenada con espacios al final.
+     */
     private static String pad(String s, int width) {
         if (s == null) s = "";
         if (s.length() >= width) return s;
-        return s + "".repeat(width - s.length());
+        return s + " ".repeat(width - s.length());
     }
 
+    /**
+     * Repite un carácter n veces y devuelve la cadena resultante.
+     *
+     * @param c Carácter a repetir.
+     * @param n Número de repeticiones (si es negativo, devuelve cadena vacía).
+     * @return Cadena con el carácter repetido n veces.
+     */
     private static String repeat(char c, int n) {
         return String.valueOf(c).repeat(Math.max(0, n));
     }
 
+    /**
+     * Convierte nombres de variables SPARQL en etiquetas legibles para humanos.
+     * Utiliza un mapa de traducciones comunes y, si no encuentra coincidencia,
+     * transforma camelCase y guiones bajos en espacios.
+     *
+     * Ejemplo: "duracionPromedio" → "duracionPromedio" (según mapa),
+     *          "myVariableName" → "my Variable Name" (transformación genérica).
+     *
+     * @param var Nombre de la variable SPARQL.
+     * @return Etiqueta legible para mostrar en la cabecera de tabla.
+     */
     private static String niceLabel(String var) {
         if (var == null || var.isEmpty()) return "";
-        // common mappings
-        Map<String,String> map = new HashMap<>();
+        // Mapeo de nombres comunes a etiquetas preferidas (puedes personalizarlo)
+        Map<String, String> map = new HashMap<>();
         map.put("tituloEspanol", "tituloEspanol");
         map.put("titulo", "titulo");
         map.put("estreno", "estreno");
@@ -453,29 +498,64 @@ public class CineColombiaManager {
         map.put("formato", "formato");
         map.put("duracionPromedio", "duracionPromedio");
         map.put("totalPeliculas", "totalPeliculas");
-        // default: transform camelCase/underscores to readable label
+        // Si la variable está en el mapa, usar la etiqueta personalizada
         if (map.containsKey(var)) return map.get(var);
-        String t = var.replaceAll("([a-z])([A-Z])","$1 $2").replace('_', ' ');
+        // Transformación genérica: insertar espacio antes de mayúsculas y reemplazar '_'
+        String t = var.replaceAll("([a-z])([A-Z])", "$1 $2").replace('_', ' ');
         return t;
     }
 
+    /**
+     * Formatea una celda para que ocupe exactamente el ancho especificado,
+     * añadiendo espacios de relleno a la izquierda (si rightAlign=true)
+     * o a la derecha (si rightAlign=false).
+     *
+     * Si la cadena excede el ancho, se trunca.
+     *
+     * @param s Contenido de la celda.
+     * @param width Ancho objetivo de la celda.
+     * @param rightAlign Si true, alinea a la derecha (útil para números).
+     * @return Cadena formateada con el ancho exacto especificado.
+     */
     private static String formatCell(String s, int width, boolean rightAlign) {
         if (s == null) s = "";
+        // Truncar si excede el ancho
         if (s.length() > width) s = s.substring(0, width);
         int pad = width - s.length();
         if (pad <= 0) return s;
+        // Alineación derecha: espacios antes del texto
         if (rightAlign) {
-            return "".repeat(pad) + s;
+            return " ".repeat(pad) + s;
         } else {
-            return s + "".repeat(pad);
+            // Alineación izquierda: espacios después del texto
+            return s + " ".repeat(pad);
         }
     }
 
+    /**
+     * Determina si una cadena representa un número (entero o decimal).
+     * Utiliza una expresión regular simple para detectar patrones numéricos.
+     *
+     * @param s Cadena a evaluar.
+     * @return true si la cadena coincide con un patrón numérico, false en caso contrario.
+     */
     private static boolean isNumeric(String s) {
         if (s == null || s.isEmpty()) return false;
         return s.matches("^-?\\d+(\\.\\d+)?$");
     }
 
+    /**
+     * Divide una cadena larga en múltiples líneas para que ninguna exceda
+     * el ancho máximo especificado. Intenta romper en espacios cuando es posible;
+     * si no hay espacios disponibles, realiza un corte duro.
+     *
+     * Nota: Esta función no se usa actualmente (se prefirió truncado en Option A),
+     *       pero se conserva para uso futuro si se desea wrapping multi-línea.
+     *
+     * @param s Cadena a dividir.
+     * @param maxWidth Ancho máximo por línea.
+     * @return Lista de líneas, cada una con longitud <= maxWidth.
+     */
     private static List<String> wrapToLines(String s, int maxWidth) {
         List<String> out = new ArrayList<>();
         if (s == null) {
@@ -488,9 +568,9 @@ public class CineColombiaManager {
                 out.add(remaining);
                 break;
             }
-            // try to break at last space within maxWidth
+            // Intentar cortar en el último espacio dentro del ancho máximo
             int breakPos = remaining.lastIndexOf(' ', maxWidth);
-            if (breakPos <= 0) breakPos = maxWidth; // hard break
+            if (breakPos <= 0) breakPos = maxWidth; // corte duro si no hay espacios
             out.add(remaining.substring(0, breakPos));
             remaining = remaining.substring(breakPos).trim();
         }
@@ -498,12 +578,23 @@ public class CineColombiaManager {
         return out;
     }
 
+    /**
+     * Centra una cadena dentro de un ancho especificado, distribuyendo
+     * espacios de relleno de forma equitativa a ambos lados.
+     *
+     * Si la cadena es más larga que el ancho, se trunca.
+     *
+     * @param s Cadena a centrar.
+     * @param width Ancho objetivo.
+     * @return Cadena centrada con espacios de padding.
+     */
     private static String center(String s, int width) {
         if (s == null) s = "";
+        // Truncar si excede el ancho
         if (s.length() >= width) return s.substring(0, width);
         int totalPad = width - s.length();
         int left = totalPad / 2;
         int right = totalPad - left;
-        return "".repeat(left) + s + "".repeat(right);
+        return " ".repeat(left) + s + " ".repeat(right);
     }
 }
